@@ -76,14 +76,12 @@ export class MainBoard {
 
   public addActionForTurn(turnIndex: number) {
     const nextAction = this.pickRandomActionForTurn(turnIndex);
-    console.log('Board.addActionForTurn:', turnIndex, 'nextAction:', nextAction.key);
     if (nextAction) {
       this.actions.push(nextAction);
     }
   }
 
   public accumulate() {
-    console.log('Board.accumulate');
     this.actions
       .filter((action) => action instanceof AccumulationAction)
       .forEach((action: AccumulationAction) => action.accumulate());

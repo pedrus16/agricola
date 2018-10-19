@@ -1,3 +1,4 @@
+import { IActionParams } from './actions/action-params.interface';
 import { Action } from './actions/action.class';
 import { ResourceType } from './resource-type.enum';
 
@@ -5,16 +6,30 @@ export class Player {
 
   private resourceMap = new Map<ResourceType, number>();
 
-  public addResource(type: ResourceType, amount: number) {
-    console.log('Player.addResource:', type, 'amount:', amount);
-    const currentAmount = this.resourceMap.get(type);
-    this.resourceMap.set(type, currentAmount + amount);
+  public takeAction(action: Action, params?: IActionParams): boolean {
+    if (action.take(this, params)) {
+      // TODO Apply action's effect
+
+      return true;
+    }
+
+    return false;
   }
 
-  public takeAction(action: Action): boolean {
-    console.log('Player.takeAction');
+  public cookOneResource(
+    majorImprovement: any,
+    resourceType: ResourceType.VEGETABLE | ResourceType.SHEEP | ResourceType.PIG | ResourceType.CATTLE,
+  ) {
+    // TODO
+  }
 
-    return action.take(this);
+  public discardOneResource(player: Player, resourceType: ResourceType) {
+    // TODO
+  }
+
+  private addResource(type: ResourceType, amount: number) {
+    const currentAmount = this.resourceMap.get(type);
+    this.resourceMap.set(type, currentAmount + amount);
   }
 
 }

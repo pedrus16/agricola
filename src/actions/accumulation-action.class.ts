@@ -1,5 +1,7 @@
 import { Player } from '../player.class';
 import { ResourceType } from '../resource-type.enum';
+import { ActionEffectType } from './action-effect-type.enum';
+import { IActionEffect } from './action-effect.interface';
 import { Action } from './action.class';
 
 export abstract class AccumulationAction extends Action {
@@ -8,14 +10,12 @@ export abstract class AccumulationAction extends Action {
 
   protected quantity = 0;
 
-  public take(player: Player): boolean {
-    if (this.quantity < 0) {
-      return false;
-    }
-    player.addResource(this.type, this.quantity);
+  public take(player: Player): IActionEffect {
+    this.player = player;
+    const effect = { type: ActionEffectType.OBTAIN_RESOURCE, amount: this.quantity };
     this.quantity = 0;
 
-    return true;
+    return effect;
   }
 
   public accumulate() {
