@@ -11,6 +11,10 @@ export abstract class AccumulationAction extends Action {
   protected quantity = 0;
 
   public take(player: Player): IActionEffect[] {
+    if (this.occupied) {
+      return [];
+    }
+
     this.player = player;
     const effect = { type: ActionEffectType.OBTAIN_RESOURCE, data: { type: this.type, amount: this.quantity } };
     this.quantity = 0;

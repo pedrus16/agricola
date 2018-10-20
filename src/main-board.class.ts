@@ -25,6 +25,7 @@ import { SheepMarketAction } from './actions/cards/sheep-market-action.class';
 import { UrgentWishForChildrenAction } from './actions/cards/urgent-wish-for-children-action.class';
 import { VegetableSeedsAction } from './actions/cards/vegetable-seeds-action.class';
 import { WesternQuarryAction } from './actions/cards/western-quarry-action.class';
+import { Player } from './player.class';
 
 export class MainBoard {
 
@@ -74,6 +75,7 @@ export class MainBoard {
     ];
   }
 
+  // TODO Fix me. Remove the added action from the pool
   public addActionForTurn(turnIndex: number) {
     const nextAction = this.pickRandomActionForTurn(turnIndex);
     if (nextAction) {
@@ -87,10 +89,22 @@ export class MainBoard {
       .forEach((action: AccumulationAction) => action.accumulate());
   }
 
+  public returnAllFarmers() {
+    this.actions.filter((action) => action.occupied).forEach((action) => {
+      action.clearPlayer();
+    });
+  }
+
   public findAvailableActionByKey(key: ActionKey): Action {
     return this.actions
       .filter((action) => !action.occupied)
       .find((action) => action.key === key);
+  }
+
+  public getActionsTakenBy(player: Player): Action[] {
+    return this.actions
+      .filter((action) => action.occupied)
+      .filter((action) => action.occupyingPlayer === player);
   }
 
   private pickRandomActionForTurn(turnIndex: number): Action | null {
@@ -119,5 +133,7 @@ export class MainBoard {
 }
 
 function pickRandomAction(actions: Action[]): Action {
-  return actions[Math.floor(Math.random() * actions.length)];
+  const actionIndex = Math.floor(Math.random() * actions.length);
+  const action = actions[actionIndex];
+  return action;
 }

@@ -1,14 +1,30 @@
 import { ActionEffectType } from './actions/action-effect-type.enum';
 import { IActionParams } from './actions/action-params.interface';
 import { Action } from './actions/action.class';
+import { MainBoard } from './main-board.class';
 import { ResourceType } from './resource-type.enum';
+
+const MAX_FARMER_COUNT = 5;
 
 export class Player {
 
   private resourceMap = new Map<ResourceType, number>();
   private effectMap = new Map<ActionEffectType, (data: any) => boolean>();
+  private farmerCount = 2;
+  private mainBoard: MainBoard;
+  private actionTakenCallback: (Player) => void;
 
-  constructor() {
+  get hasFarmerAvailable(): boolean {
+    return this.usedFarmers < this.farmerCount;
+  }
+
+  get usedFarmers(): number {
+    return this.mainBoard.getActionsTakenBy(this).length;
+  }
+
+  constructor(mainBoard: MainBoard, actionTakenCallback: (Player) => void) {
+    this.mainBoard = mainBoard;
+    this.actionTakenCallback = actionTakenCallback;
     this.effectMap.set(ActionEffectType.OBTAIN_RESOURCE,      (data) => this.onObtainResource(data));
     this.effectMap.set(ActionEffectType.DISCARD_RESOURCE,     (data) => this.onDiscardResource(data));
     this.effectMap.set(ActionEffectType.PLOW_FIELD,           (data) => this.onPlowField(data));
@@ -23,10 +39,20 @@ export class Player {
   }
 
   public takeAction(action: Action, params?: IActionParams): boolean {
-    const effects = action.take(this, params);
-    effects.forEach((effect) => this.effectMap.get(effect.type)(effect.data));
 
-    return false;
+    if (this.usedFarmers >= this.farmerCount) {
+      return false;
+    }
+
+    const effects = action.take(this, params);
+    const effectFail = effects.map((effect) => this.effectMap.get(effect.type)(effect.data)).find((result) => !result);
+
+    if (effectFail !== undefined) {
+      return false;
+    }
+
+    this.actionTakenCallback(this);
+    return true;
   }
 
   public cookOneResource(

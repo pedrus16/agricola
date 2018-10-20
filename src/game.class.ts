@@ -9,6 +9,7 @@ export class Game {
   private firstPlayer: number;
   private activePlayerIndex: number;
   private activeTurnIndex: number;
+  private harvestTurnIndexes = [3, 6, 8, 10, 12, 14];
 
   get activePlayer(): Player {
     return this.players[this.activePlayerIndex];
@@ -19,7 +20,7 @@ export class Game {
 
     this.players = [];
     for (let i = 0; i < playerCount; ++i) {
-      this.players.push(new Player());
+      this.players.push(new Player(this.mainBoard, (player) => this.onPlayerTakeAction(player)));
     }
     this.firstPlayer = Math.floor(Math.random() * playerCount);
     this.activeTurnIndex = 0;
@@ -31,17 +32,34 @@ export class Game {
     return `
       GAME:
       Current Turn: ${this.activeTurnIndex + 1}
+      Current Player: ${this.activePlayerIndex + 1}
     `;
   }
 
+  private onPlayerTakeAction(player: Player) {
+    this.activateNextPlayer();
+  }
+
   private activateNextPlayer() {
-    // TODO
+    const nextPlayerIndex = (this.activePlayerIndex + 1) % this.players.length;
+    const nextPlayer = this.players[nextPlayerIndex];
+    if (nextPlayer.hasFarmerAvailable) {
+      this.activePlayerIndex = nextPlayerIndex;
+    } else {
+      this.beginReturnFromWork();
+    }
   }
 
   private beginTurn() {
     this.activePlayerIndex = this.firstPlayer;
     this.mainBoard.addActionForTurn(this.activeTurnIndex);
     this.mainBoard.accumulate();
+  }
+
+  private beginReturnFromWork() {
+    this.mainBoard.returnAllFarmers();
+    this.activeTurnIndex++;
+    this.beginTurn();
   }
 
 }

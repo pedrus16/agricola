@@ -15,4 +15,13 @@ export abstract class Action {
     return !!this.player;
   }
 
+  public get occupyingPlayer(): Player {
+    return this.player;
+  }
+
+  // TODO This shouldn't be public! Find another way to return the farmer
+  public clearPlayer() {
+    this.player = null;
+  }
+
 }
