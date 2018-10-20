@@ -8,7 +8,7 @@ export class VegetableSeedsAction extends Action {
 
   public readonly key = ActionKey.VEGETABLE_SEEDS;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

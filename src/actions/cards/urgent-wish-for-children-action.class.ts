@@ -8,7 +8,7 @@ export class UrgentWishForChildrenAction extends Action {
 
   public readonly key = ActionKey.URGENT_WISH_FOR_CHILDREN;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

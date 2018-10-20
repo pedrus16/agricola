@@ -8,7 +8,7 @@ export class MeetingPlaceAction extends Action {
 
   public readonly key = ActionKey.MEETING_PLACE;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

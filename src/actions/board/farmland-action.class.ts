@@ -8,7 +8,7 @@ export class FarmlandAction extends Action {
 
   public readonly key = ActionKey.FARMLAND;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

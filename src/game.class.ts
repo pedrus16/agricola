@@ -10,6 +10,10 @@ export class Game {
   private activePlayerIndex: number;
   private activeTurnIndex: number;
 
+  get activePlayer(): Player {
+    return this.players[this.activePlayerIndex];
+  }
+
   public constructor(playerCount: 1 | 2 | 3 | 4) {
     this.mainBoard = new MainBoard(playerCount);
 
@@ -23,8 +27,11 @@ export class Game {
     this.beginTurn();
   }
 
-  get activePlayer(): Player {
-    return this.players[this.activePlayerIndex];
+  public toString(): string {
+    return `
+      GAME:
+      Current Turn: ${this.activeTurnIndex + 1}
+    `;
   }
 
   private activateNextPlayer() {

@@ -8,7 +8,7 @@ export class DayLaborerAction extends Action {
 
   public readonly key = ActionKey.DAY_LABORER;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

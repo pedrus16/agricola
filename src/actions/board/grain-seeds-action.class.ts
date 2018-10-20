@@ -8,7 +8,7 @@ export class GrainSeedsAction extends Action {
 
   public readonly key = ActionKey.GRAIN_SEEDS;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

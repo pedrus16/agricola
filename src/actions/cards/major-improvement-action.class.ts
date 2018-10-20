@@ -8,7 +8,7 @@ export class MajorImprovementAction extends Action {
 
   public readonly key = ActionKey.MAJOR_IMPROVEMENT;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

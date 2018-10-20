@@ -8,7 +8,7 @@ export class LessonsAction extends Action {
 
   public readonly key = ActionKey.LESSONS;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

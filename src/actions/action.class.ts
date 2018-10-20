@@ -9,7 +9,7 @@ export abstract class Action {
 
   protected player: Player;
 
-  public abstract take(player: Player, params?: IActionParams): IActionEffect;
+  public abstract take(player: Player, params?: IActionParams): IActionEffect[];
 
   public get occupied(): boolean {
     return !!this.player;

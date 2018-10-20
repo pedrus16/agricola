@@ -1,5 +1,6 @@
 export enum ActionEffectType {
   OBTAIN_RESOURCE,
+  DISCARD_RESOURCE,
   PLOW_FIELD,
   SOW,
   PLAY_OCCUPATION_CARD,

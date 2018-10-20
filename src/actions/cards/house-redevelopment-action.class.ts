@@ -8,7 +8,7 @@ export class HouseRedevelopmentAction extends Action {
 
   public readonly key = ActionKey.HOUSE_REDEVELOPMENT;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

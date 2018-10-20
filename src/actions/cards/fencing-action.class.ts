@@ -8,7 +8,7 @@ export class FencingAction extends Action {
 
   public readonly key = ActionKey.FENCING;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }

@@ -8,7 +8,7 @@ export class CultivationAction extends Action {
 
   public readonly key = ActionKey.CULTIVATION;
 
-  public take(player: Player, params: IActionParams): IActionEffect {
-    return null;
+  public take(player: Player, params: IActionParams): IActionEffect[] {
+    return [];
   }
 }
