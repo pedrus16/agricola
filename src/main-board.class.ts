@@ -60,7 +60,7 @@ export class MainBoard {
 
   private actions: Action[];
 
-  constructor(playerCount: number) {
+  constructor(playerCount: 1 | 2 | 3 | 4) {
     this.actions = [
       new FarmExpansionAction(),
       new MeetingPlaceAction(),
@@ -75,7 +75,6 @@ export class MainBoard {
     ];
   }
 
-  // TODO Fix me. Remove the added action from the pool
   public addActionForTurn(turnIndex: number) {
     const nextAction = this.pickRandomActionForTurn(turnIndex);
     if (nextAction) {
@@ -135,5 +134,6 @@ export class MainBoard {
 function pickRandomAction(actions: Action[]): Action {
   const actionIndex = Math.floor(Math.random() * actions.length);
   const action = actions[actionIndex];
+  actions.splice(actionIndex, 1);
   return action;
 }
