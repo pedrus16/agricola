@@ -60,13 +60,16 @@ export class Player {
     }
 
     const effects = action.take(this, params);
-    const effectFail = effects.map((effect) => this.effectMap.get(effect.type)(effect.data)).find((result) => !result);
+    const effectFail = effects
+      .map((effect) => this.effectMap.get(effect.type)(effect.data))
+      .find((result) => !result);
 
     if (effectFail !== undefined) {
       return false;
     }
 
     this.actionTakenCallback(this);
+
     return true;
   }
 
@@ -94,22 +97,23 @@ export class Player {
     this.resourceMap.set(type, currentAmount + amount);
   }
 
-  private onObtainResource(data: { type: ResourceType, amount: number }): boolean {
-    this.addResource(data.type, data.amount);
+  private onObtainResource(resource: { type: ResourceType, amount: number }): boolean {
+    this.addResource(resource.type, resource.amount);
+
     return true;
   }
 
-  private onDiscardResource(data: { type: ResourceType, amount: number }): boolean {
-    return this.discardResource(data.type, data.amount);
+  private onDiscardResource(resource: { type: ResourceType, amount: number }): boolean {
+    return this.discardResource(resource.type, resource.amount);
   }
 
-  private onPlowField(data: { position: number }): boolean {
+  private onPlowField(position: number): boolean {
     // TODO
 
     return false;
   }
 
-  private onSow(data: { type: ResourceType, amount: number }): boolean {
+  private onSow(resources: ResourceType[]): boolean {
     // TODO
 
     return false;
@@ -133,7 +137,7 @@ export class Player {
     return false;
   }
 
-  private onBuildRooms(data: { type: ResourceType, amount: number }): boolean {
+  private onBuildRooms(positions: number[]): boolean {
     // TODO
 
     return false;

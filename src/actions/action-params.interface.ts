@@ -1,6 +1,8 @@
+import { ResourceType } from '../resource-type.enum';
+
 export interface IActionParams {
   fieldPosition?: number;
-  roomsPositions?: number[];
+  rooms?: { type: ResourceType.WOOD | ResourceType.CLAY | ResourceType.STONE, positions: number[] };
   stablePositions?: number[];
   fencesPositions?: number[];
   occupationCard?: any; // TODO change with OccupationCard type
