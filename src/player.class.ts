@@ -22,6 +22,21 @@ export class Player {
     return this.mainBoard.getActionsTakenBy(this).length;
   }
 
+  get resources(): any {
+    return {
+      [ResourceType.FOOD]: this.resourceMap.get(ResourceType.FOOD) || 0,
+      [ResourceType.SHEEP]: this.resourceMap.get(ResourceType.SHEEP) || 0,
+      [ResourceType.CATTLE]: this.resourceMap.get(ResourceType.CATTLE) || 0,
+      [ResourceType.PIG]: this.resourceMap.get(ResourceType.PIG) || 0,
+      [ResourceType.REED]: this.resourceMap.get(ResourceType.REED) || 0,
+      [ResourceType.CLAY]: this.resourceMap.get(ResourceType.CLAY) || 0,
+      [ResourceType.WOOD]: this.resourceMap.get(ResourceType.WOOD) || 0,
+      [ResourceType.STONE]: this.resourceMap.get(ResourceType.STONE) || 0,
+      [ResourceType.CEREAL]: this.resourceMap.get(ResourceType.CEREAL) || 0,
+      [ResourceType.VEGETABLE]: this.resourceMap.get(ResourceType.VEGETABLE) || 0,
+    };
+  }
+
   constructor(mainBoard: MainBoard, actionTakenCallback: (Player) => void) {
     this.mainBoard = mainBoard;
     this.actionTakenCallback = actionTakenCallback;
@@ -75,7 +90,7 @@ export class Player {
   }
 
   private addResource(type: ResourceType, amount: number) {
-    const currentAmount = this.resourceMap.get(type);
+    const currentAmount = this.resourceMap.get(type) || 0;
     this.resourceMap.set(type, currentAmount + amount);
   }
 

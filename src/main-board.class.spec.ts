@@ -1,6 +1,6 @@
+import { AccumulationAction } from './actions/accumulation-action.class';
 import { ActionKey } from './actions/action-keys.enum';
 import { MainBoard } from './main-board.class';
-import { AccumulationAction } from './actions/accumulation-action.class';
 import { Player } from './player.class';
 
 describe('MainBoard Class', () => {
@@ -94,7 +94,7 @@ describe('MainBoard Class', () => {
 
   it('should call clearPlayer() on all occupied actions', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => {});
+    const player = new Player(mainBoard, () => null);
     const action = mainBoard.findAvailableActionByKey(ActionKey.FOREST);
     player.takeAction(action, {});
     spyOn(action, 'clearPlayer');
@@ -104,7 +104,7 @@ describe('MainBoard Class', () => {
 
   it('should return the action if its not occupied', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => {});
+    const player = new Player(mainBoard, () => null);
     const action = mainBoard.findAvailableActionByKey(ActionKey.FOREST);
     expect(action).toBeDefined();
     player.takeAction(action, {});
@@ -113,7 +113,7 @@ describe('MainBoard Class', () => {
 
   it('should return a list of actions taken by the player', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => {});
+    const player = new Player(mainBoard, () => null);
     const forestAction = mainBoard.findAvailableActionByKey(ActionKey.FOREST);
     const clayPitAction = mainBoard.findAvailableActionByKey(ActionKey.CLAY_PIT);
     player.takeAction(forestAction, {});
