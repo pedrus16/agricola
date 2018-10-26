@@ -1,5 +1,4 @@
 import { Player } from '../player.class';
-import { IActionEffect } from './action-effect.interface';
 import { ActionKey } from './action-keys.enum';
 import { IActionParams } from './action-params.interface';
 
