@@ -13,7 +13,7 @@ export abstract class AccumulationAction extends Action {
   }
 
   protected applyEffects(player: Player): boolean {
-    // TODO
+    player.obtainResource(this.type, this.quantity);
     this.quantity = 0;
 
     return true;

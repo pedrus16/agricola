@@ -148,4 +148,20 @@ export class Player {
     return false;
   }
 
+  public toString(): string {
+    return `
+      Resources:
+        FOOD: ${this.resourceMap.get(ResourceType.FOOD)}
+        SHEEP: ${this.resourceMap.get(ResourceType.SHEEP)}
+        CATTLE: ${this.resourceMap.get(ResourceType.CATTLE)}
+        PIG: ${this.resourceMap.get(ResourceType.PIG)}
+        REED: ${this.resourceMap.get(ResourceType.REED)}
+        CLAY: ${this.resourceMap.get(ResourceType.CLAY)}
+        WOOD: ${this.resourceMap.get(ResourceType.WOOD)}
+        STONE: ${this.resourceMap.get(ResourceType.STONE)}
+        CEREAL: ${this.resourceMap.get(ResourceType.CEREAL)}
+        VEGETABLE: ${this.resourceMap.get(ResourceType.VEGETABLE)}
+    `;
+  }
+
 }
