@@ -8,4 +8,7 @@ export interface IActionParams {
   occupationCard?: any; // TODO change with OccupationCard type
   minorImprovementCard?: any; // TODO change with MinorImprovementCard type
   majorImprovementCard?: any; // TODO change with MajorImprovementCard type
+  getFirstPlayerToken?: boolean;
+  seeds?: Array<ResourceType.CEREAL | ResourceType.VEGETABLE>;
+  renovateTo?: ResourceType.CLAY | ResourceType.STONE;
 }

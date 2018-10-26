@@ -7,9 +7,22 @@ export abstract class Action {
 
   public abstract readonly key: ActionKey;
 
-  protected player: Player;
+  private player: Player;
 
-  public abstract take(player: Player, params?: IActionParams): IActionEffect[];
+  public take(player: Player, params?: IActionParams): boolean {
+    if (this.occupied) {
+      return false;
+    }
+
+    const success = this.applyEffects(player, params);
+    if (success) {
+      this.player = player;
+
+      return true;
+    }
+
+    return false;
+  }
 
   public get occupied(): boolean {
     return !!this.player;
@@ -23,5 +36,7 @@ export abstract class Action {
   public clearPlayer() {
     this.player = null;
   }
+
+  protected abstract applyEffects(player: Player, params?: IActionParams): boolean;
 
 }

@@ -1,4 +1,3 @@
-import { ActionEffectType } from './actions/action-effect-type.enum';
 import { IActionParams } from './actions/action-params.interface';
 import { Action } from './actions/action.class';
 import { MainBoard } from './main-board.class';
@@ -9,7 +8,6 @@ const MAX_FARMER_COUNT = 5;
 export class Player {
 
   private resourceMap = new Map<ResourceType, number>();
-  private effectMap = new Map<ActionEffectType, (data: any) => boolean>();
   private farmerCount = 2;
   private mainBoard: MainBoard;
   private actionTakenCallback: (Player) => void;
@@ -40,17 +38,6 @@ export class Player {
   constructor(mainBoard: MainBoard, actionTakenCallback: (Player) => void) {
     this.mainBoard = mainBoard;
     this.actionTakenCallback = actionTakenCallback;
-    this.effectMap.set(ActionEffectType.OBTAIN_RESOURCE,      (data) => this.onObtainResource(data));
-    this.effectMap.set(ActionEffectType.DISCARD_RESOURCE,     (data) => this.onDiscardResource(data));
-    this.effectMap.set(ActionEffectType.PLOW_FIELD,           (data) => this.onPlowField(data));
-    this.effectMap.set(ActionEffectType.SOW,                  (data) => this.onSow(data));
-    this.effectMap.set(ActionEffectType.PLAY_OCCUPATION_CARD, (data) => this.onPlayOccupationCard(data));
-    this.effectMap.set(ActionEffectType.BECOME_FIRST_PLAYER,  (data) => this.onBecomeFirstPlayer(data));
-    this.effectMap.set(ActionEffectType.MAKE_A_CHILD,         (data) => this.onMakeAChild(data));
-    this.effectMap.set(ActionEffectType.BUILD_ROOMS,          (data) => this.onBuildRooms(data));
-    this.effectMap.set(ActionEffectType.RENOVATE_HOUSE,       (data) => this.onRenovateHouse(data));
-    this.effectMap.set(ActionEffectType.PLACE_FENCES,         (data) => this.onPlaceFences(data));
-    this.effectMap.set(ActionEffectType.BUILD_STABLES,        (data) => this.onBuildStables(data));
   }
 
   public takeAction(action: Action, params?: IActionParams): boolean {
@@ -59,18 +46,14 @@ export class Player {
       return false;
     }
 
-    const effects = action.take(this, params);
-    const effectFail = effects
-      .map((effect) => this.effectMap.get(effect.type)(effect.data))
-      .find((result) => !result);
+    const success = action.take(this, params);
+    if (success) {
+      this.actionTakenCallback(this);
 
-    if (effectFail !== undefined) {
-      return false;
+      return true;
     }
 
-    this.actionTakenCallback(this);
-
-    return true;
+    return false;
   }
 
   public cookOneResource(
@@ -78,6 +61,13 @@ export class Player {
     resourceType: ResourceType.VEGETABLE | ResourceType.SHEEP | ResourceType.PIG | ResourceType.CATTLE,
   ) {
     // TODO
+  }
+
+  public obtainResource(type: ResourceType, amount: number): boolean {
+    const currentAmount = this.resourceMap.get(type) || 0;
+    this.resourceMap.set(type, currentAmount + amount);
+
+    return true;
   }
 
   public discardResource(type: ResourceType, amount: number): boolean {
@@ -92,70 +82,67 @@ export class Player {
     return true;
   }
 
-  private addResource(type: ResourceType, amount: number) {
-    const currentAmount = this.resourceMap.get(type) || 0;
-    this.resourceMap.set(type, currentAmount + amount);
-  }
-
-  private onObtainResource(resource: { type: ResourceType, amount: number }): boolean {
-    this.addResource(resource.type, resource.amount);
-
-    return true;
-  }
-
-  private onDiscardResource(resource: { type: ResourceType, amount: number }): boolean {
-    return this.discardResource(resource.type, resource.amount);
-  }
-
-  private onPlowField(position: number): boolean {
+  public plowField(position: number): boolean {
     // TODO
 
     return false;
   }
 
-  private onSow(resources: ResourceType[]): boolean {
+  public sow(resources: Array<ResourceType.CEREAL | ResourceType.VEGETABLE>): boolean {
     // TODO
 
     return false;
   }
 
-  private onPlayOccupationCard(data: { type: ResourceType, amount: number }): boolean {
+  public playOccupationCard(card: any): boolean {
     // TODO
 
     return false;
   }
 
-  private onBecomeFirstPlayer(data: { type: ResourceType, amount: number }): boolean {
+  public playMinorImprovementCard(card: any): boolean {
     // TODO
 
     return false;
   }
 
-  private onMakeAChild(data: { type: ResourceType, amount: number }): boolean {
+  public playMajorImprovementCard(card: any): boolean {
     // TODO
 
     return false;
   }
 
-  private onBuildRooms(positions: number[]): boolean {
+  public becomeFirstPlayer(): boolean {
     // TODO
 
     return false;
   }
 
-  private onRenovateHouse(data: { type: ResourceType, amount: number }): boolean {
+  public onMakeAChild(): boolean {
     // TODO
 
     return false;
   }
 
-  private onPlaceFences(data: { type: ResourceType, amount: number }): boolean {
+  public onBuildRooms(positions: number[]): boolean {
     // TODO
 
     return false;
   }
 
-  private onBuildStables(data: { type: ResourceType, amount: number }): boolean {
+  public onRenovateHouse(type: ResourceType.CLAY | ResourceType.STONE): boolean {
+    // TODO
+
+    return false;
+  }
+
+  public onPlaceFences(positions: number[]): boolean {
+    // TODO
+
+    return false;
+  }
+
+  public onBuildStables(positions: number[]): boolean {
     // TODO
 
     return false;
