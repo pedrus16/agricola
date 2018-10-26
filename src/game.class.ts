@@ -28,6 +28,10 @@ export class Game {
     this.beginTurn();
   }
 
+  public getPlayer(index: number): Player {
+    return this.players[index];
+  }
+
   public toString(): string {
     return `
       GAME:
