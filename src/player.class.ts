@@ -70,14 +70,28 @@ export class Player {
     return true;
   }
 
-  public discardResource(type: ResourceType, amount: number): boolean {
-    const resourceInStorage = this.resourceMap.get(type);
+  public hasResources(resources: Array<{ type: ResourceType, amount: number }>): boolean {
+    return !resources.some((resource) => {
+      const resourceInStorage = this.resourceMap.get(resource.type);
 
-    if (!resourceInStorage || resourceInStorage < amount) {
+      if (!resourceInStorage || resourceInStorage < resource.amount) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  public discardResources(resources: Array<{ type: ResourceType, amount: number }>): boolean {
+    if (!this.hasResources(resources)) {
       return false;
     }
 
-    this.resourceMap.set(type, resourceInStorage - amount);
+    resources.forEach((resource) => {
+      const resourceInStorage = this.resourceMap.get(resource.type);
+
+      this.resourceMap.set(resource.type, resourceInStorage - resource.amount);
+    });
+
 
     return true;
   }
@@ -118,31 +132,31 @@ export class Player {
     return false;
   }
 
-  public onMakeAChild(): boolean {
+  public makeAChild(): boolean {
     // TODO
 
     return false;
   }
 
-  public onBuildRooms(positions: number[]): boolean {
+  public buildRooms(type: ResourceType.WOOD | ResourceType.CLAY | ResourceType.STONE, positions: number[]): boolean {
     // TODO
 
     return false;
   }
 
-  public onRenovateHouse(type: ResourceType.CLAY | ResourceType.STONE): boolean {
+  public renovateHouse(type: ResourceType.CLAY | ResourceType.STONE): boolean {
     // TODO
 
     return false;
   }
 
-  public onPlaceFences(positions: number[]): boolean {
+  public placeFences(positions: number[]): boolean {
     // TODO
 
     return false;
   }
 
-  public onBuildStables(positions: number[]): boolean {
+  public buildStables(positions: number[]): boolean {
     // TODO
 
     return false;

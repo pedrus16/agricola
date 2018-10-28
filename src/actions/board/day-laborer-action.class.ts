@@ -1,4 +1,5 @@
 import { Player } from '../../player.class';
+import { ResourceType } from '../../resource-type.enum';
 import { ActionKey } from '../action-keys.enum';
 import { Action } from '../action.class';
 
@@ -9,7 +10,8 @@ export class DayLaborerAction extends Action {
   private readonly foodAmount = 2;
 
   protected applyEffects(player: Player): boolean {
-    // TODO
-    return false;
+    player.obtainResource(ResourceType.FOOD, this.foodAmount);
+
+    return true;
   }
 }

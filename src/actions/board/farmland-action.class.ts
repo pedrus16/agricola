@@ -8,7 +8,6 @@ export class FarmlandAction extends Action {
   public readonly key = ActionKey.FARMLAND;
 
   protected applyEffects(player: Player, params: IActionParams): boolean {
-    // TODO
-    return false;
+    return player.plowField(params.fieldPosition);
   }
 }
