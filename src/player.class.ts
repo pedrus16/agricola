@@ -1,9 +1,9 @@
 import { IActionParams } from './actions/action-params.interface';
 import { Action } from './actions/action.class';
 import { MainBoard } from './main-board.class';
+import { MinorImprovement } from './minor-improvements/minor-improvement.class';
+import { Occupation } from './occupations/occupation.class';
 import { ResourceType } from './resource-type.enum';
-
-const MAX_FARMER_COUNT = 5;
 
 export class Player {
 
@@ -11,6 +11,8 @@ export class Player {
   private farmerCount = 2;
   private mainBoard: MainBoard;
   private actionTakenCallback: (Player) => void;
+  private occupations: Occupation[];
+  private minorImprovements: MinorImprovement[];
 
   get hasFarmerAvailable(): boolean {
     return this.usedFarmers < this.farmerCount;
@@ -35,8 +37,15 @@ export class Player {
     };
   }
 
-  constructor(mainBoard: MainBoard, actionTakenCallback: (Player) => void) {
+  constructor(
+    mainBoard: MainBoard,
+    occupations: Occupation[],
+    minorImprovements: MinorImprovement[],
+    actionTakenCallback: (Player) => void,
+  ) {
     this.mainBoard = mainBoard;
+    this.occupations = occupations;
+    this.minorImprovements = minorImprovements;
     this.actionTakenCallback = actionTakenCallback;
   }
 
@@ -91,7 +100,6 @@ export class Player {
 
       this.resourceMap.set(resource.type, resourceInStorage - resource.amount);
     });
-
 
     return true;
   }

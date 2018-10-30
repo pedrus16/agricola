@@ -7,14 +7,14 @@ describe('Player Class', () => {
 
   it('should create', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => null);
+    const player = new Player(mainBoard, [], [], () => null);
     expect(player).toBeDefined();
     expect(player instanceof Player).toBeTruthy();
   });
 
   it('return the number of used farmers for the turn', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => null);
+    const player = new Player(mainBoard, [], [], () => null);
     expect(player.usedFarmers).toBe(0);
     player.takeAction(mainBoard.findAvailableActionByKey(ActionKey.CLAY_PIT));
     expect(player.usedFarmers).toBe(1);
@@ -24,7 +24,7 @@ describe('Player Class', () => {
 
   it('should take the action and apply its effect on the player', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => null);
+    const player = new Player(mainBoard, [], [], () => null);
     mainBoard.accumulate();
     expect(player.takeAction(mainBoard.findAvailableActionByKey(ActionKey.CLAY_PIT))).toBe(true);
     expect(player.resources).toEqual({
@@ -47,12 +47,12 @@ describe('Player Class', () => {
 
   it('should discard the resources from the player\'s storage', () => {
     const mainBoard = new MainBoard(4);
-    const player = new Player(mainBoard, () => null);
+    const player = new Player(mainBoard, [], [], () => null);
     mainBoard.accumulate();
     mainBoard.accumulate();
     mainBoard.accumulate();
     expect(player.takeAction(mainBoard.findAvailableActionByKey(ActionKey.CLAY_PIT))).toBe(true);
-    player.discardResource(ResourceType.CLAY, 2);
+    player.discardResources([{ type: ResourceType.CLAY, amount: 2 }]);
     expect(player.resources).toEqual({
       [ResourceType.FOOD]: 0,
       [ResourceType.SHEEP]: 0,

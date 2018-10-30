@@ -20,7 +20,10 @@ export class Game {
 
     this.players = [];
     for (let i = 0; i < playerCount; ++i) {
-      this.players.push(new Player(this.mainBoard, (player) => this.onPlayerTakeAction(player)));
+      const occupations = []; // TODO build a random list from the deck
+      const minorImprovements = []; // TODO build a random list from the deck
+      const onPlayerTakeAction = (player) => this.onPlayerTakeAction(player);
+      this.players.push(new Player(this.mainBoard, occupations, minorImprovements, onPlayerTakeAction));
     }
     this.firstPlayer = Math.floor(Math.random() * playerCount);
     this.activeTurnIndex = 0;
